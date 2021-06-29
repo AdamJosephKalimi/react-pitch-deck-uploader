@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
-import firebase, { storage } from '../firebase';
+import firebase, {storage} from '../firebase';
 
 
 const baseStyle = {
@@ -33,7 +33,9 @@ const rejectStyle = {
 };
 
 const DropZone = (props) => {
-    const [file, setFile] = useState([])
+    const [progress, setProgress] = useState(0);
+    const [file, setFile] = useState([]);
+    const [url, setUrl] = useState("");
 
   const {
     getRootProps,
@@ -66,43 +68,30 @@ const DropZone = (props) => {
   ));
   
   const submitFile = () => {
-      console.log("acceptedFiles", file)
-    //   send filepath to AP
-    // const storageRef = firebase.storage().ref();
-
-    // // [START storage_monitor_upload]
-    // var uploadTask = storageRef.child(`pitches/${acceptedFiles.name}`).put(file);
-  
-    // // Register three observers:
-    // // 1. 'state_changed' observer, called any time the state changes
-    // // 2. Error observer, called on failure
-    // // 3. Completion observer, called on successful completion
-    // uploadTask.on('state_changed', 
-    //   (snapshot) => {
-    //     // Observe state change events such as progress, pause, and resume
-    //     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    //     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    //     console.log('Upload is ' + progress + '% done');
-    //     switch (snapshot.state) {
-    //       case firebase.storage.TaskState.PAUSED: // or 'paused'
-    //         console.log('Upload is paused');
-    //         break;
-    //       case firebase.storage.TaskState.RUNNING: // or 'running'
-    //         console.log('Upload is running');
-    //         break;
-    //     }
-    //   }, 
-    //   (error) => {
-    //     // Handle unsuccessful uploads
-    //   }, 
-    //   () => {
-    //     // Handle successful uploads on complete
-    //     // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-    //     uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-    //       console.log('File available at', downloadURL);
-    //     });
-    //   }
-    // );
+    //   console.log("acceptedFiles", file.name, "PATH", file.path)
+    const uploadTask = storage.ref(`pitches/${file.name}`).put(file);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        storage
+          .ref("pitches")
+          .child(file.name)
+          .getDownloadURL()
+          .then(url => {
+              console.log("URL", url)
+            setUrl(url);
+          });
+      }
+    );
      
   }
 

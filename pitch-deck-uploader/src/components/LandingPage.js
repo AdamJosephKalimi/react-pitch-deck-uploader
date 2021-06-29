@@ -34,7 +34,7 @@ const LandingPage = () => {
     }, []);
   
     // console.log("REF", ref)
-    console.log("PITCHES", pitches);
+    // console.log("PITCHES", pitches);
 
     return (
         <div>
