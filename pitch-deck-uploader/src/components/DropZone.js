@@ -1,8 +1,18 @@
 import React, {useMemo, useState, useContext} from 'react';
-import { PitchURLContext } from '../contexts/PitchURLContext';
 import {useDropzone} from 'react-dropzone';
+import Button from '@material-ui/core/Button';
 import firebase, {storage} from '../firebase';
+import { Link, withRouter } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { PitchURLContext } from '../contexts/PitchURLContext';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 const baseStyle = {
   flex: 1,
@@ -11,12 +21,12 @@ const baseStyle = {
   alignItems: 'center',
   padding: '20px',
   margin: '0 10% 0 10%',
-  borderWidth: 2,
+  borderWidth: 5,
   borderRadius: 2,
   borderColor: '#eeeeee',
   borderStyle: 'dashed',
   backgroundColor: '#fafafa',
-  color: '#bdbdbd',
+  color: '#1675ba',
   outline: 'none',
   transition: 'border .24s ease-in-out'
 };
@@ -36,11 +46,7 @@ const rejectStyle = {
 const DropZone = (props) => {
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState([]);
-    const [url, setUrl] = useState("");
-    
     const { pitchURL, updatePitchURL } = useContext(PitchURLContext);
-    console.log('pitch url from within Dropzone', pitchURL)
-
 
   const {
     getRootProps,
@@ -50,7 +56,6 @@ const DropZone = (props) => {
     isDragReject,
     acceptedFiles
   } = useDropzone({
-      // may need to adjust this functionality so that file is cleared out before saving a new file to state
       onDrop: files => setFile(files[0])
     });
 
@@ -92,26 +97,33 @@ const DropZone = (props) => {
           .getDownloadURL()
           .then(url => {
               updatePitchURL(url)
+              props.history.push('/presentation');
           });
       }
     );
-     
   }
 
   return (
-    <div className="container">
+    <div>
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop or click to select files</p>
+        <h3>Drop your pitch here or click to select it</h3>
       </div>
-      <aside>
-        <h4>Files</h4>
-        <ul>{files}</ul>
-      </aside>
-      {progress == 0 || progress == 100 ? <div></div> : <progress value={progress} max="100" />}
-      <button onClick={submitFile}>Submit</button>
+      <div className="dropzone-container">
+        <aside>
+          <h2>{files}</h2>
+        </aside>
+        {progress == 0 || progress == 100 ? <div></div> : <progress value={progress} max="100" />}
+        <Button 
+          component={Link} 
+          variant="contained" 
+          onClick={submitFile} 
+          style={{ color: 'white', backgroundColor: '#1675BA'}}>
+          Submit
+        </Button>
+      </div>
     </div>
   );
 }
 
-export default DropZone;
+export default withRouter(DropZone);

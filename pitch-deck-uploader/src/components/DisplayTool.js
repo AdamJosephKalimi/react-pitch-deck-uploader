@@ -6,7 +6,6 @@ const DisplayTool = (props) => {
   const viewer = useRef(null);
   const { pitchURL } = useContext(PitchURLContext)
   useEffect(() => {
-    console.log("url from within displayTool", pitchURL)
     WebViewer(
       { 
         path: '../lib', 
@@ -31,7 +30,7 @@ const DisplayTool = (props) => {
   return (
 
     <div className="app">
-      <div className="webviewer" ref={viewer} style={{height: "100vh"}}></div>
+      <div className="webviewer" ref={viewer} style={{height: "90vh"}}></div>
     </div>
   );
 }
