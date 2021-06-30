@@ -20,7 +20,7 @@ const LandingPage = (props) => {
     
     return (
         <div> 
-            <img className='banner' src='https://firebasestorage.googleapis.com/v0/b/react-pitch-deck-uploader.appspot.com/o/assets%2Fbanner%203.png?alt=media&token=1cfe8e97-8474-4597-a9e3-b65840f3ad65'/>
+            <img className='banner' src='https://firebasestorage.googleapis.com/v0/b/react-pitch-deck-uploader.appspot.com/o/assets%2Fbanner%204.png?alt=media&token=c7fee7da-b6fc-48bc-a440-dce3989de117'/>
             <DropZone />
         </div>
     );
