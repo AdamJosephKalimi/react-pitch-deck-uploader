@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { PitchURLContext } from '../contexts/PitchURLContext';
 import WebViewer from '@pdftron/webviewer';
 
 const DisplayTool = (props) => {
   const viewer = useRef(null);
-//   const file = 
-
+  const { pitchURL } = useContext(PitchURLContext)
   useEffect(() => {
-
+    console.log("url from within displayTool", pitchURL)
     WebViewer(
       { 
         path: '../lib', 
         pdftronServer: 'https://demo.pdftron.com/',
-        initialDoc: 'https://firebasestorage.googleapis.com/v0/b/react-pitch-deck-uploader.appspot.com/o/pitches%2Fadam-doc_guthries-proposal_v2.pptx?alt=media&token=f501b309-716f-449c-83ad-f86479b41f61',
+        initialDoc: pitchURL,
         disabledElements: [
           'viewControlsButton',
           'viewControlsOverlay'
@@ -20,11 +20,12 @@ const DisplayTool = (props) => {
      viewer.current,
     ).then(instance => {
         const { docViewer } = instance;
+        console.log("INSTANCE", instance)
         var Feature = instance.Feature;
         instance.disableFeatures([Feature.header]);
         instance.disableFeatures([Feature.Copy]);
-        instance.loadDocument('https://firebasestorage.googleapis.com/v0/b/react-pitch-deck-uploader.appspot.com/o/pitches%2Fadam-doc_guthries-proposal_v2.pptx?alt=media&token=f501b309-716f-449c-83ad-f86479b41f61');
-     })
+        instance.loadDocument(pitchURL);
+     }).catch(err => console.log("ERROR: ", err))
   }, []);
 
   return (

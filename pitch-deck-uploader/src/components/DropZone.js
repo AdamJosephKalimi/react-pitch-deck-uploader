@@ -1,4 +1,5 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useState, useContext} from 'react';
+import { PitchURLContext } from '../contexts/PitchURLContext';
 import {useDropzone} from 'react-dropzone';
 import firebase, {storage} from '../firebase';
 
@@ -36,6 +37,10 @@ const DropZone = (props) => {
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState([]);
     const [url, setUrl] = useState("");
+    
+    const { pitchURL, updatePitchURL } = useContext(PitchURLContext);
+    console.log('pitch url from within Dropzone', pitchURL)
+
 
   const {
     getRootProps,
@@ -68,7 +73,6 @@ const DropZone = (props) => {
   ));
   
   const submitFile = () => {
-    //   console.log("acceptedFiles", file.name, "PATH", file.path)
     const uploadTask = storage.ref(`pitches/${file.name}`).put(file);
     uploadTask.on(
       "state_changed",
@@ -87,26 +91,24 @@ const DropZone = (props) => {
           .child(file.name)
           .getDownloadURL()
           .then(url => {
-              console.log("URL", url)
-            setUrl(url);
+              updatePitchURL(url)
           });
       }
     );
      
   }
 
-
-
   return (
     <div className="container">
       <div {...getRootProps({style})}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag 'n' drop or click to select files</p>
       </div>
       <aside>
         <h4>Files</h4>
         <ul>{files}</ul>
       </aside>
+      {progress == 0 || progress == 100 ? <div></div> : <progress value={progress} max="100" />}
       <button onClick={submitFile}>Submit</button>
     </div>
   );

@@ -1,45 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import DropZone from './DropZone';
 import firebase, { storage } from '../firebase';
+import { PitchURLContext } from '../contexts/PitchURLContext';
+import { Link } from 'react-router-dom';
 
-const LandingPage = () => {
-    const [pitches, setPitches] = useState([]);
-    const [loading, setLoading] = useState(false);
-
-    const ref = firebase.firestore().collection('pitches');
-
-    // const getPitches = () => {
-    //     setLoading(true)
-    //     ref.onSnapshot((querySnapshot) => {
-    //         const items = [];
-    //         querySnapshot.forEach((doc) => {
-    //             items.push(doc.data());
-    //         })
-    //         setPitches(items);
-    //         setLoading(false);
-    //     })
-    // }
-    const getPitchesOnce = () => {
-        setLoading(true);
-        ref.get().then(item => {
-            const items = item.docs.map(doc => doc.data());
-            setPitches(items);
-            setLoading(false);
-        })
-    }
-
-    useEffect(() => {
-        // getPitches();
-        getPitchesOnce()
-    }, []);
-  
-    // console.log("REF", ref)
-    // console.log("PITCHES", pitches);
-
+const LandingPage = (props) => {
+    const { pitchURL } = useContext(PitchURLContext)
+    const checkURL = () => console.log("HERE", pitchURL);
+    
     return (
         <div>
-            <div>This is the landing page</div>
+            <div>
+                <img className="banner" src='https://firebasestorage.googleapis.com/v0/b/react-pitch-deck-uploader.appspot.com/o/assets%2Fbanner%202.png?alt=media&token=3ab7b611-d766-489c-a30e-506664be861e'/>
+            </div>
             <DropZone />
+            <button onClick={checkURL}>Check current URL</button>
+            <Link to='/presentation'>Presentation</Link>
         </div>
     );
 }

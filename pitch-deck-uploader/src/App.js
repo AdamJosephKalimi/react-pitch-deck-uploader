@@ -1,18 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
-import React, {useRef, useEffect} from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import Navbar from './components/Navbar'
 import DisplayTool from './components/DisplayTool';
 import LandingPage from './components/LandingPage';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import PitchURLContextProvider from './contexts/PitchURLContext';
+
 
 function App() {
+  const pitchURLContext = React.createContext()
 
+  const [presentationURL, setPresentationURL] = useState("")
   // find a way to monitor for an uploaded doc
 
   return (
-    <div>
-      <LandingPage />
-      {/* <DisplayTool /> */}
-    </div>
+    <Router>
+      <div>
+        <PitchURLContextProvider>
+        <Navbar />
+          <Switch>
+            <Route exact path="/">
+              <LandingPage />
+            </Route>
+            <Route exact path="/presentation">
+              <DisplayTool />
+            </Route>
+          </Switch>
+        </PitchURLContextProvider>
+      </div>
+    </Router>
   );
 }
 
