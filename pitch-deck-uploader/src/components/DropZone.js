@@ -1,18 +1,9 @@
-import React, {useMemo, useState, useContext} from 'react';
-import {useDropzone} from 'react-dropzone';
+import React, { useMemo, useState, useContext } from 'react';
+import { useDropzone } from 'react-dropzone';
 import Button from '@material-ui/core/Button';
-import firebase, {storage} from '../firebase';
+import { storage } from '../firebase';
 import { Link, withRouter } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import { PitchURLContext } from '../contexts/PitchURLContext';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
 
 const baseStyle = {
   flex: 1,
@@ -111,9 +102,9 @@ const DropZone = (props) => {
       </div>
       <div className="dropzone-container">
         <aside>
-          <h2>{files}</h2>
+          <h3>{files}</h3>
         </aside>
-        {progress == 0 || progress == 100 ? <div></div> : <progress value={progress} max="100" />}
+        {progress === 0 || progress === 100 ? <div></div> : <progress value={progress} max="100" />}
         <Button 
           component={Link} 
           variant="contained" 

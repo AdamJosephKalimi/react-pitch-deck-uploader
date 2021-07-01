@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import { PitchURLContext } from '../contexts/PitchURLContext';
 import WebViewer from '@pdftron/webviewer';
 
