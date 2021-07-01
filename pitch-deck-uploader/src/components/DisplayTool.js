@@ -12,8 +12,7 @@ const DisplayTool = (props) => {
         pdftronServer: 'https://demo.pdftron.com/',
         initialDoc: pitchURL,
         disabledElements: [
-          'viewControlsButton',
-          'viewControlsOverlay'
+          'header'
         ]
      }, 
      viewer.current,

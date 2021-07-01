@@ -72,9 +72,9 @@ const DropZone = (props) => {
 
 
   const files = acceptedFiles.map(file => (
-    <li key={file.path}>
-      {file.path} - {file.size} bytes
-    </li>
+    <h3 style={{color: '#1675ba'}} key={file.path}>
+      Your File: {file.path}, Size: {Math.floor(file.size/1000000)} MB
+    </h3>
   ));
   
   const submitFile = () => {

@@ -7,8 +7,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PitchURLContextProvider from './contexts/PitchURLContext';
 
 function App() {
-  const pitchURLContext = React.createContext()
-
   return (
     <Router>
       <div>
