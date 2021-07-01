@@ -4,6 +4,9 @@ PDFTron: npm i @pdftron/webviewer \
 Material-UI: npm install material-ui \
 Firebase: npm install firebase
 
+## File types that can be displayed in project
+https://www.pdftron.com/pdf-sdk/supported-file-formats/
+
 
 # Getting Started with Create React App
 
