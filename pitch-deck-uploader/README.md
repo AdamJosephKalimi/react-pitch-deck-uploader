@@ -1,8 +1,8 @@
 ## Libraries used in this project
-Dropzone: npm install --save react-dropzone
-PDFTron: npm i @pdftron/webviewer
-Material-UI: npm install material-ui
-Firebase: npm install firebase
+Dropzone: npm install --save react-dropzone \
+PDFTron: npm i @pdftron/webviewer \
+Material-UI: npm install material-ui \
+Firebase: npm install firebase \
 
 
 # Getting Started with Create React App
