@@ -5,6 +5,7 @@ import WebViewer from '@pdftron/webviewer';
 const DisplayTool = (props) => {
   const viewer = useRef(null);
   const { pitchURL } = useContext(PitchURLContext)
+  
   useEffect(() => {
     WebViewer(
       { 
@@ -27,7 +28,6 @@ const DisplayTool = (props) => {
   }, []);
 
   return (
-
     <div className="app">
       <div className="webviewer" ref={viewer} style={{height: "90vh"}}></div>
     </div>

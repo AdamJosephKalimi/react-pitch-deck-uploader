@@ -37,7 +37,7 @@ const rejectStyle = {
 const DropZone = (props) => {
     const [progress, setProgress] = useState(0);
     const [file, setFile] = useState([]);
-    const { pitchURL, updatePitchURL } = useContext(PitchURLContext);
+    const { pitchURL, setPitchURL } = useContext(PitchURLContext);
 
   const {
     getRootProps,
@@ -67,6 +67,8 @@ const DropZone = (props) => {
       Your File: {file.path}, Size: {Math.floor(file.size/1000000)} MB
     </h3>
   ));
+
+  
   
   const submitFile = () => {
     const uploadTask = storage.ref(`pitches/${file.name}`).put(file);
@@ -87,7 +89,7 @@ const DropZone = (props) => {
           .child(file.name)
           .getDownloadURL()
           .then(url => {
-              updatePitchURL(url)
+            setPitchURL(url)
               props.history.push('/presentation');
           });
       }
@@ -105,6 +107,16 @@ const DropZone = (props) => {
           <h3>{files}</h3>
         </aside>
         {progress === 0 || progress === 100 ? <div></div> : <progress value={progress} max="100" />}
+
+      {files.length == 0 ? 
+        <Button 
+          component={Link} 
+          variant="contained" 
+          onClick={submitFile} 
+          disabled>
+          Submit
+        </Button>
+        :
         <Button 
           component={Link} 
           variant="contained" 
@@ -112,6 +124,7 @@ const DropZone = (props) => {
           style={{ color: 'white', backgroundColor: '#1675BA'}}>
           Submit
         </Button>
+      }
       </div>
     </div>
   );
